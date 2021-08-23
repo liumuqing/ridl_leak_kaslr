@@ -42,7 +42,7 @@ static __always_inline bool do_syscall_x64(struct pt_regs *regs, int nr) // inli
     if (likely(unr < NR_syscalls)) {
         unr = array_index_nospec(unr, NR_syscalls);
         regs->ax = sys_call_table[unr](regs);
-        //is source code, is this location
+        //our target to leak is this line in source code
         return true;
     }
     return false;
